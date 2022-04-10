@@ -15,7 +15,7 @@ A tool for downloading Spotify songs from YouTube.
 - Open `config.json` to edit the configuration
 	- Replace `<clientId>` and `<clientSecret>` with your client ID and client secret
 	- If you would like to download explicit songs, look at the [limitations](#limitations) to see how
-	```json
+	```jsonc
 	{
 		"spotify": {
 			"clientId": "<clientId>", // Put your client ID here, this is required
