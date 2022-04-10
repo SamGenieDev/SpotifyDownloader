@@ -1,16 +1,17 @@
-const config = require("./config.json")
-
-const SpotifyWebAPI = require("spotify-web-api-node");
-
-var spotify = new SpotifyWebAPI({
-	clientId: config.spotify.clientId,
-	clientSecret: config.spotify.clientSecret
-});
-
 const https = require("https");
 const path = require("path");
 const fs = require("fs");
 const readline = require("readline");
+
+// Read the configuration file
+const config = JSON.parse(fs.readFileSync("config.json"), "utf8");
+
+const SpotifyWebAPI = require("spotify-web-api-node");
+
+const spotify = new SpotifyWebAPI({
+	clientId: config.spotify.clientId,
+	clientSecret: config.spotify.clientSecret
+});
 
 const ytSearch = require("yt-search");
 const ytdl = require("ytdl-core");
@@ -231,12 +232,19 @@ async function parseDownloadList(path) {
 	return playlists;
 }
 
-(async () => {
-	if (!config.clientId || config.clientId === "<clientId>")
-		return console.log("Error: Missing Spotify clientId");
+async function fatalError(message) {
+	console.log("Fatal error: " + message);
 
-	if (!config.clientSecret || config.clientSecret === "<clientSecret>")
-		return console.log("Error: Invalid Spotify clientSecret");
+	while (true)
+		await wait(100);
+}
+
+(async () => {
+	if (!config.spotify.clientId || config.spotify.clientId === "<clientId>")
+		return fatalError("Missing Spotify clientId");
+
+	if (!config.spotify.clientSecret || config.spotify.clientSecret === "<clientSecret>")
+		return fatalError("Invalid Spotify clientSecret");
 
 	await requestSpotifyAccessToken();
 
@@ -255,5 +263,5 @@ async function parseDownloadList(path) {
 			await wait(100);
 	}
 
-	console.log("Queue finished");
+	console.log("Queue finished processing");
 })();
