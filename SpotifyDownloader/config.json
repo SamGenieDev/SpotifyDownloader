@@ -1,0 +1,15 @@
+{
+	"spotify": {
+		"clientId": "<clientId>",
+		"clientSecret": "<clientSecret>"
+	},
+	"youtube": {
+		"cookies": "<cookies>"
+	},
+	"poolSize": 5,
+	"downloadListFileName": "download_list.txt",
+	"outputPath": "output",
+	"lowQualityMode": false,
+	"videoDurationTolerance": 0.1,
+	"rateLimitRetryDelay": 2500
+}
